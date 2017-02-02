@@ -87,11 +87,11 @@
             <div class="alert alert-info">
                 Please login with your Username and Password.
             </div>
-            <% if(req.query.error) {%>
-            <div class="alert alert-danger alert-dismissable">
-                <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
-                <%=messages[req.query.error] %>
-            </div>
+            <% if(req.query.error && messages[req.query.error]) {%>
+                <div class="alert alert-danger alert-dismissable">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <%=messages[req.query.error] %>
+                </div>
             <% } %>
             <form class="form-horizontal" action="/employees/login" method="post">
                 <fieldset>
