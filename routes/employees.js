@@ -3,21 +3,15 @@ var router = express.Router();
 var mongo = require('../lib/mongo');
 
 /* GET users listing. */
-router.post('/', function(req, res, next) {
-  //res.send('respond with a resource');
-  var Employee = mongo.Employee;
-  var username = req.body.username;
-  var password = req.body.password;
-  console.log("Username: "+username+ " and Password: "+password);
-  Employee.findOne({username:username,password:password}, function (err, employees) {
-    if (!err && employees) {
-        console.log("Employee List:"+JSON.stringify(employees));
-        res.render("listEmployees");
-    }else{
-        res.redirect('/');
-    }
-    
-  });
+router.post('/login', function(req, res, next) {
+    require('passport').authenticate('local', {failureRedirect: '/?error=error.login_error'})(req, res, next);
+}, function(req, res, next) {
+    res.render("listEmployees");
+});
+
+router.get('/logout', function(req, res, next) {
+    req.logout();
+    res.redirect('/');
 });
 
 module.exports = router;
