@@ -41,6 +41,8 @@
 
     <!-- jQuery -->
     <script src="/bower_components/jquery/jquery.js"></script>
+    <script src = "/bower_components/jquery/jquery-ui.js"></script>
+    <link rel="stylesheet" href="css/jquery-ui.css">
     
     <!-- jQuery UI -->
     <script>
@@ -55,6 +57,20 @@
             	   return false;
                }
                return true;
+           });
+           var url = window.location.href + "signUp";
+           //alert('<iframe style="border: 1px; color:black ; scroll:auto" src="' + url + '" width="100%" height="100%"></iframe>');
+           $( "#thedialog").html('<iframe style="border: 1px; color:black " src="' + url + '" width="100%" height="100%"></iframe>')
+           		.dialog({
+	               autoOpen: false, 
+	               modal: true,
+	               height: 600,
+                   width: 500,
+               	   title: "Sign Up"
+            });
+           $("#signUp").button().click(function(){
+	            $( "#thedialog" ).dialog( "open" );
+		        return false;
            });
     	});
       </script>
@@ -117,8 +133,9 @@
                     </p>
                     <!-- sign up link -->
                     <p class="center col-md-5">
-                        <button type="submit" class="btn btn-primary"><%=__('signup') %></button>
+                        <button type="submit" id="signUp" class="btn btn-primary"><%=__('signup') %></button>
                     </p>
+                    <div id = "thedialog" title = "Dialog Title goes here..."></div>
                 </fieldset>
             </form>
         </div>
