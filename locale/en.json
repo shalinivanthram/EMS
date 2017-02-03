@@ -1,0 +1,11 @@
+{
+	"error.login_error": "Invalid credentials",
+	"placeholder.enter_user_name": "Enter your username",
+	"placeholder.enter_password": "Enter your password",
+	"info.login": "Please login with your Username and Password.",
+	"info.welcome": "Welcome to EMS.",
+	"info.loggedout": "You are logged out. Please enter your credentials to login again",
+	"login": "Login",
+	"signup": "Signup",
+	"sample": "sample"
+}

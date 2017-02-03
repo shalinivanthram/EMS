@@ -11,7 +11,7 @@ router.post('/login', function(req, res, next) {
 
 router.get('/logout', function(req, res, next) {
     req.logout();
-    res.redirect('/');
+    res.redirect('/?message=info.loggedout');
 });
 
 module.exports = router;
