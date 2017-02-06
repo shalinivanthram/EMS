@@ -31,6 +31,12 @@ router.get('/editEmp', function(req, res){
 	}
 });
 
+router.get('/getEmployeeList', function(req, res, next) {
+    
+    emp.getEmployeeList(req, res);
+    
+});
+
 /*router.post("/updateEmp", function(req,res){
 	emp.updateEmp(req, res);
 });*/

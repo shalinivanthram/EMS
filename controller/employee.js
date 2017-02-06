@@ -82,6 +82,33 @@ var getEmployee = function(req, res){
 	});
 }
 
+var getEmployeeList = function(req, res){
+    
+    var employeesJSON = {};
+    var employeesData = [];
+    Employee.find({}).exec(function (err, employees) {
+        if(err){
+                console.log("err: " + err);
+        } else if( employees != null){
+              employees.forEach(function(emp) {
+                  console.log("Employee :"+JSON.stringify(emp));
+                  var employee = [];
+                  employee.push(emp.firstName+" "+emp.lastName);
+                  employee.push(emp.email);
+                  employee.push(emp.phone);
+                  employee.push(emp.doj.toString());
+                  var actions = '<a class="btn btn-success" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
+                                '<a class="btn btn-info" href="#"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
+                                '<a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>'
+                  console.log("Employee :"+employee);
+                  employee.push(actions);
+                  employeesData.push(employee);
+              });
+              employeesJSON["DATA"] = employeesData;
+              res.json(employeesJSON);
+        }
+    });
+}
 /*var updateEmp = function(req, res){
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;
@@ -117,11 +144,12 @@ var getEmployee = function(req, res){
 				  }
 			  });
 		  }
-		});*/
+		});
 	
 	
-};
+};*/
 
-exports.updateEmp = updateEmp;
+//exports.updateEmp = updateEmp;
 exports.createEmp = createEmp;
 exports.getEmployee = getEmployee;
+exports.getEmployeeList = getEmployeeList;
