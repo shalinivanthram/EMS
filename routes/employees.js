@@ -37,8 +37,11 @@ router.get('/getEmployeeList', function(req, res, next) {
     
 });
 
-/*router.post("/updateEmp", function(req,res){
+router.post("/updateEmp", function(req,res){
 	emp.updateEmp(req, res);
-});*/
+});
+router.get('/listEmployees', function(req, res, next) {
+    res.render('listEmployees');
+});
 
 module.exports = router;

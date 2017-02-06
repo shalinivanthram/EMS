@@ -19,7 +19,7 @@ var createEmp = function(req, res){
 	if(isAdmin === null || isAdmin === ''){
 		isAdmin = 'N';
 	} else {
-		isAdmin = 'Y;'
+		isAdmin = 'Y';
 	}
 	
 	var user = {
@@ -98,7 +98,7 @@ var getEmployeeList = function(req, res){
                   employee.push(emp.phone);
                   employee.push(emp.doj.toString());
                   var actions = '<a class="btn btn-success" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
-                                '<a class="btn btn-info" href="#"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
+                                '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
                                 '<a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>'
                   console.log("Employee :"+employee);
                   employee.push(actions);
@@ -109,7 +109,7 @@ var getEmployeeList = function(req, res){
         }
     });
 }
-/*var updateEmp = function(req, res){
+var updateEmp = function(req, res){
 	var firstName = req.body.firstName;
 	var lastName = req.body.lastName;
 	var email = req.body.email;
@@ -140,16 +140,16 @@ var getEmployeeList = function(req, res){
 				  }
 				  else {
 				  	console.log("Emp update Successful");
-				  	//res.render();
+				  	res.redirect("/employees/listEmployees");
 				  }
 			  });
 		  }
 		});
 	
 	
-};*/
+};
 
-//exports.updateEmp = updateEmp;
+exports.updateEmp = updateEmp;
 exports.createEmp = createEmp;
 exports.getEmployee = getEmployee;
 exports.getEmployeeList = getEmployeeList;
