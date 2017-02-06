@@ -9,8 +9,5 @@ router.get('/', function(req, res, next) {
 router.get("/signUp", function(req,res){
 	res.render("signUp");
 });
-router.post("/empSingUp", function(req,res){
-	emp.createEmp(req, res);
-});
 
 module.exports = router;

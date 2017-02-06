@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var mongo = require('../lib/mongo');
+var emp = require('../controller/employee');
 
 /* GET users listing. */
 router.post('/login', function(req, res, next) {
@@ -13,5 +14,25 @@ router.get('/logout', function(req, res, next) {
     req.logout();
     res.redirect('/?message=info.loggedout');
 });
+
+router.post("/empSignUp", function(req,res){
+	emp.createEmp(req, res);
+});
+
+//edit employee using username
+router.get('/editEmp', function(req, res){
+	if(req.query.username === null || req.query.username === ''){
+		console.log('no user name to retrieve');
+		//redirect to error page
+		res.render('/viewEmployee?error=error.editEmp.invalidUserName');
+	} else {
+		console.log("going to get emp details");
+		emp.getEmployee(req, res);
+	}
+});
+
+/*router.post("/updateEmp", function(req,res){
+	emp.updateEmp(req, res);
+});*/
 
 module.exports = router;

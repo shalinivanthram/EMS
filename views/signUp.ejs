@@ -45,7 +45,7 @@
     <!-- jQuery UI -->
     <script src = "/bower_components/jquery/jquery.js"></script>
     <script src = "/bower_components/jquery/jquery-ui.js"></script>
-    <link rel="stylesheet" href="css/jquery-ui.css">
+    <link rel="stylesheet" href="/bower_components/jquery/jquery-ui.css">
   	    
     <script>
     	$(document).ready(function(){
@@ -58,7 +58,7 @@
       			buttonText: "Select date"
     		});
            $("#empSingUp").button().click(function(){
-              /*if($("#firstName").val() === ''){
+              if($("#firstName").val() === ''){
             	   alert('Please enter first name');
             	   return false;
                }
@@ -89,15 +89,15 @@
                if(!validateDoj($("#doj").val())){
                	   alert('Date of joining cannot be future date');
             	   return false;
-               }*/
+               }
                if($("#usertName").val() === ''){
             	   alert('Please enter user name');
             	   return false;
                }
-              /* if($("#password").val() === ''){
+              if($("#password").val() === ''){
             	   alert('Please enter password');
             	   return false;
-               }*/
+               }
                return true;
            });
     	});
@@ -145,18 +145,15 @@
 
 <body>
 <div class="ch-container">
-    <div class="row">
-        
-    <div class="row">
-        <div class="col-md-12 center login-header">
+    <div>
+    <div>
+        <div align="center">
             <h2>Sign up to EMS</h2>
         </div>
-        <!--/span-->
-    </div><!--/row-->
-
+    </div>
     <div class="row">
         <div class="well col-md-5 center login-box">
-             <form class="form-horizontal" action="/empSingUp" method="post">
+             <form class="form-horizontal" action="/employees/empSignUp" method="post">
                 <fieldset>
                    <table class="table">
                    	<tr>
@@ -206,7 +203,7 @@
 				        <td class="center">
 				        	<div class="checkbox">
 			                    <label>
-			                        <input type="checkbox" value="">Is Admin</input>
+			                        <input type="checkbox" name="isAdmin" id="isAdmin" value="">Is Admin</input>
 			                    </label>
 			                </div>
 				        </td>
@@ -214,7 +211,7 @@
                    </table>
                     <!-- sign up link -->
                     <p class="center col-md-5">
-                        <button type="submit" class="btn btn-primary" id="empSingUp">Submit</button>
+                        <button type="submit" class="btn btn-primary" id="empSignUp">Submit</button>
                     </p>
                 </fieldset>
             </form>
