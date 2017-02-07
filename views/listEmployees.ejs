@@ -267,7 +267,6 @@
         $("#searchButton").button().click(function(){
             var paramName = $("#searchParamName").val();
             var paramValue = $("#searchParamValue").val();
-            console.log($("#searchParamName"));
             if(paramName && paramValue){
                 //alert(paramName +":"+ paramValue);
                 populateEmployees("/employees/getEmployeeList?paramName="+paramName+"&paramValue="+paramValue);
@@ -275,7 +274,7 @@
                 populateEmployees("/employees/getEmployeeList");
             }
         });
-
+        
     });
 function populateEmployees(url){
     $.ajax({
@@ -297,11 +296,12 @@ function populateEmployees(url){
                         $(nRow).children().each(function (index, td) {
                             $(this).addClass('center');
                         });
+                        $(".dataTables_filter").css("display","none");  
                     }
                 });
             }
         });
-
+      
 }
 </script>
 

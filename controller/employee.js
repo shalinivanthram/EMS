@@ -89,7 +89,9 @@ var getEmployeeList = function(req, res){
     var paramName = req.query.paramName;
     var paramValue = req.query.paramValue;
     var options = {};
-    options[paramName] = paramValue;
+    if(paramName && paramValue){
+        options[paramName] = {'$regex': paramValue,$options:'i'};
+    }
     Employee.find(options).exec(function (err, employees) {
         if(err){
                 console.log("err: " + err);
