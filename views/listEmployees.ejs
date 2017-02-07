@@ -137,8 +137,8 @@
 
                     </div>
                     <ul class="nav nav-pills nav-stacked main-menu">
-                        <li class="nav-header">Main</li>
-                        <li><a class="ajax-link" href="index.html"><i class="glyphicon glyphicon-home"></i><span> Add Employee</span></a>
+                        <li class="nav-header">Home</li>
+                        <li><a class="ajax-link" href="/employees/listEmployees"><i class="glyphicon glyphicon-home"></i><span> Dashboard</span></a>
                         </li>
                     </ul>
                 </div>
@@ -181,6 +181,26 @@
         </div>
     </div>
     <div class="box-content">
+
+        <!-- Search Criteria dropdown starts -->
+            <div class="form">
+                <div class="form-group">
+                        <input class="col-lg-2 pull-right" type="text" style="margin-right: 55%;" id="searchParamValue" placeholder="Enter the value">
+                        <a class="btn btn-info btn-sm" id="searchButton"><i class="glyphicon glyphicon-refresh"></i>Search</a>
+                        <select class="col-lg-2" id="searchParamName" data-rel="chosen">
+                                <option value="">Select Search Parameter</option>
+                                <option value="firstName">First Name</option>
+                                <option value="lastName">Last Name</option>
+                                <option value="username">Username</option>
+                                <option value="email">Email</option>
+                                <option value="phone">Phone</option>
+                        </select>
+                        
+                </div>
+                
+        </div>
+        <!-- Search Criteria dropdown end -->
+
     <table id="employeeList" class="table table-striped table-bordered bootstrap-datatable datatable responsive">
     <thead>
     <tr>
@@ -243,9 +263,26 @@
 
 <script>
     $(document).ready(function(){
-        $.ajax({
+        
+        populateEmployees("/employees/getEmployeeList");
+
+        $("#searchButton").button().click(function(){
+            var paramName = $("#searchParamName").val();
+            var paramValue = $("#searchParamValue").val();
+            console.log($("#searchParamName"));
+            if(paramName && paramValue){
+                //alert(paramName +":"+ paramValue);
+                populateEmployees("/employees/getEmployeeList?paramName="+paramName+"&paramValue="+paramValue);
+            }else if((paramName=='') && (paramValue=='')){
+                populateEmployees("/employees/getEmployeeList");
+            }
+        });
+
+    });
+function populateEmployees(url){
+    $.ajax({
             method: "GET",
-            url: "/employees/getEmployeeList",
+            url: url,
             contentType: 'application/json',
             success: function (result) {
                 $('#employeeList').dataTable().fnDestroy();
@@ -267,7 +304,7 @@
             }
         });
 
-    });
+}
 </script>
 
 <!-- external javascript -->

@@ -86,7 +86,11 @@ var getEmployeeList = function(req, res){
     
     var employeesJSON = {};
     var employeesData = [];
-    Employee.find({}).exec(function (err, employees) {
+    var paramName = req.query.paramName;
+    var paramValue = req.query.paramValue;
+    var options = {};
+    options[paramName] = paramValue;
+    Employee.find(options).exec(function (err, employees) {
         if(err){
                 console.log("err: " + err);
         } else if( employees != null){
