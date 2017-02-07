@@ -110,15 +110,16 @@ var getEmployeeList = function(req, res){
     });
 }
 var updateEmp = function(req, res){
-	var firstName = req.body.firstName;
-	var lastName = req.body.lastName;
-	var email = req.body.email;
-	var phone = req.body.phone;
-	var doj = req.body.doj;
-	var isAdmin = req.body.isAdmin;
 	var userName = req.body.userName;
-	var password = req.body.password;
+	var isAdmin = req.body.isAdmin;
+	console.log('from req: ' + isAdmin);
 	
+	if(isAdmin == null || isAdmin === '' || (isAdmin != null && isAdmin.toLowerCase() == 'undefined')){
+		isAdmin = 'N';
+	} else {
+		isAdmin = 'Y';
+	}
+	console.log('after change: ' + isAdmin);
 	Employee.findOne({'username' : userName}).exec(function (err, employee) {
 		  if(err){
 			  console.log("err: " + err);
@@ -131,7 +132,7 @@ var updateEmp = function(req, res){
 			  employee.email = req.body.email;
 			  employee.phone = req.body.phone;
 			  employee.doj = req.body.doj;
-			  employee.isAdmin = req.body.isAdmin;
+			  employee.isAdmin = isAdmin;
 			  employee.password = req.body.password;
 				
 			  employee.save(function (err) {

@@ -158,7 +158,7 @@
                    	<tr>
 				        <td>First Name</td>
 				        <td class="center">
-				        	<input class="search-query form-control col-md-10" name="firstName" id="firstName" type="text" value="<%=employee.lastName %>">
+				        	<input class="search-query form-control col-md-10" name="firstName" id="firstName" type="text" value="<%=employee.firstName %>">
 				        </td>
 				    </tr>
 				    <tr>
@@ -182,7 +182,7 @@
 				    <tr>
 				        <td>Date of Joining</td>
 				        <td class="center">
-				        	<input name="doj" id="doj" type="text">
+				        	<input name="doj" id="doj" type="text" value="<%=employee.doj %>">
 				        </td>
 				    </tr>
 				    <tr>
@@ -198,12 +198,10 @@
 				        </td>
 				    </tr>
 				    <tr>
-				        <td>Role</td>
+				        <td>Role <%= employee.isAdmin %></td> 
 				        <td class="center">
 				        	<div class="checkbox">
-			                    <label>
-			                        <input type="checkbox" name="isAdmin" id="isAdmin" checked="false">Is Admin</input>
-			                    </label>
+			                        <input type="checkbox" name="isAdmin" id="isAdmin" <%=(employee.isAdmin != null && employee.isAdmin === 'Y') ? "checked ='"+true+"'" : value=''%> >Is Admin</input>
 			                </div>
 				        </td>
 				    </tr>
