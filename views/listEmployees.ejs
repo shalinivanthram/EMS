@@ -326,20 +326,21 @@
         
     });
 
-    function editEmp(username){
-        alert('Viewing Employee');
+    function getEmp(username){
         $.ajax({
             method: "GET",
-            url: "/employees/getEmployeeByUsername?username="+username,
+            url: "/employees/editEmp?username="+username+"&responsetype=json",
             contentType: 'application/json',
             success: function (employee) {
-                alert(JSON.stringify(employee));
                 $('#firstName').val(employee.firstName);
                 $('#lastName').val(employee.lastName);
                 $('#email').val(employee.email);
                 $('#phone').val(employee.phone);
                 $('#doj').val(employee.doj);
                 $('#userName').val(employee.userName);
+                if(employee.isAdmin==='Y'){
+                    $('#isAdmin').attr('checked',true);
+                }
                 $('#viewEmployee').modal('show');
             }
         });

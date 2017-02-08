@@ -50,20 +50,18 @@
     <script>
 		$(document).ready(function(){	
 			
-			$( "#doj" ).datepicker({
+                    $( "#doj" ).datepicker({
       			showOn: "button",
       			buttonImage: "/img/calendar.png",
       			buttonImageOnly: true,
       			buttonHeight:50,
       			buttonWidth:50,
       			buttonText: "Select date"
-    		});			
+                    });			
 	
-			var doj = '<%=employee.doj %>';
-			var d = new Date("<%=employee.doj %>");
-			var str = $.datepicker.formatDate('mm/dd/yyyy', d);
-			alert('d: ' + d);
-			
+			//var doj = '<%=employee.doj %>';
+			//var d = new Date("<%=employee.doj %>");
+			//var str = $.datepicker.formatDate('mm/dd/yyyy', d);
 			//$("#doj").datepicker("setDate", str);
 		})
 							

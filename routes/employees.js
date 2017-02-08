@@ -44,8 +44,4 @@ router.get('/listEmployees', function(req, res, next) {
     res.render('listEmployees');
 });
 
-router.get('/getEmployeeByUsername', function(req, res, next) {
-    emp.getEmployeeByUsername(req, res);
-});
-
 module.exports = router;

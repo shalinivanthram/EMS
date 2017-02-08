@@ -59,6 +59,7 @@ var createEmp = function(req, res){
 
 var getEmployee = function(req, res){
 	var username = req.query.username;
+        var responsetype = req.query.responsetype;
 	
 	Employee.findOne({'username' : username}).exec(function (err, employee) {
 	  if(err){
@@ -77,31 +78,12 @@ var getEmployee = function(req, res){
 				  	 "doj":employee.doj
 				  	};
 		  console.log(JSON.stringify(emp));
-		  res.render("viewEmployee", {employee: emp});
-	  }
-	});
-}
-
-var getEmployeeByUsername = function(req, res){
-	var username = req.query.username;
-	
-	Employee.findOne({'username' : username}).exec(function (err, employee) {
-	  if(err){
-		  console.log("err: " + err);
-	  } else if( employee === null){
-		  console.log("username does not exist");
-	  } else {
-		  //res.setHeader('Content-Type', 'application/json');
-		  var emp = {"firstName": employee.firstName,
-				  	 "lastName":employee.lastName,
-				  	 "userName":employee.username,
-				  	 "password": employee.password,
-				  	 "email":employee.email,
-				  	 "phone":employee.phone,
-				  	 "isAdmin":employee.isAdmin,
-				  	 "doj":employee.doj
-				  	};
-		  res.json(emp);
+                  if(responsetype==='json'){
+                      res.json(emp);
+                  }else{
+                      res.render("viewEmployee", {employee: emp});
+                  }
+		  
 	  }
 	});
 }
@@ -130,14 +112,14 @@ var getEmployeeList = function(req, res){
                   employee.push(emp.email);
                   employee.push(emp.phone);
                   employee.push(emp.doj.toString());
-                  var actions = '<a class="btn btn-success" onclick="editEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>';
+                  var actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>';
                   if(isAdmin==='Y'){
-                      actions = '<a class="btn btn-success" onclick="editEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
+                      actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
                                 '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
                                 '<a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>';
                   }
                   if(emp.username===username){
-                      actions = '<a class="btn btn-success" onclick="editEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
+                      actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
                                 '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>';
                   }
                   
@@ -195,4 +177,3 @@ exports.updateEmp = updateEmp;
 exports.createEmp = createEmp;
 exports.getEmployee = getEmployee;
 exports.getEmployeeList = getEmployeeList;
-exports.getEmployeeByUsername=getEmployeeByUsername;
