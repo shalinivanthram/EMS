@@ -229,25 +229,74 @@
 
     <hr>
 
-    <!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+    <div class="modal fade" id="viewEmployee" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
          aria-hidden="true">
 
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal">×</button>
-                    <h3>Settings</h3>
+                    <h3>Employee Details :</h3>
                 </div>
                 <div class="modal-body">
-                    <p>Here settings can be configured...</p>
+                    <div class="row">
+                        
+                              <table class="table">
+                                   <tr>
+                                                   <td>First Name</td>
+                                                   <td class="center">
+                                                           <input class="search-query form-control col-md-10" name="firstName" id="firstName" type="text"  readonly="true">
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Last Name</td>
+                                                   <td class="center">
+                                                           <input class="search-query form-control col-md-10" name="lastName" id="lastName" type="text"  readonly="true">
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Email id</td>
+                                                   <td class="center">
+                                                           <input class="search-query form-control col-md-10" name="email" id="email" type="text" readonly="true">
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Phone</td>
+                                                   <td class="center">
+                                                           <input class="search-query form-control col-md-10" name="phone" id="phone" type="text" readonly="true">
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>Date of Joining</td>
+                                                   <td class="center">
+                                                           <input name="doj" id="doj" type="text" readonly="true">
+                                                   </td>
+                                               </tr>
+                                               <tr>
+                                                   <td>User Name</td>
+                                                   <td class="center">
+                                                           <input class="search-query form-control col-md-10" name="userName" id="userName" type="text" readonly="true">
+                                                   </td>
+                                               </tr>
+                                            
+                                               <tr>
+                                                   <td>Role
+                                                   <td class="center">
+                                                           <div class="checkbox">
+                                                           <input type="checkbox" name="isAdmin" id="isAdmin">Is Admin</input>
+                                                   </div>
+                                                   </td>
+                                               </tr>
+                              </table>
+                           
+                   </div>
                 </div>
                 <div class="modal-footer">
                     <a href="#" class="btn btn-default" data-dismiss="modal">Close</a>
-                    <a href="#" class="btn btn-primary" data-dismiss="modal">Save changes</a>
                 </div>
             </div>
         </div>
-    </div>-->
+    </div>
 
     <footer class="row">
         <p class="col-md-9 col-sm-9 col-xs-12 copyright">&copy; <a href="http://usman.it" target="_blank">Muhammad
@@ -276,33 +325,53 @@
         });
         
     });
-function populateEmployees(url){
-    $.ajax({
+
+    function editEmp(username){
+        alert('Viewing Employee');
+        $.ajax({
             method: "GET",
-            url: url,
+            url: "/employees/getEmployeeByUsername?username="+username,
             contentType: 'application/json',
-            success: function (result) {
-                $('#employeeList').dataTable().fnDestroy();
-                $('#employeeList').dataTable({
-                    "aaData": result["DATA"],
-                    "aoColumns": [
-                    { "sTitle": "Name","class" : "center" },
-                    { "sTitle": "Email","class" : "center" },
-                    { "sTitle": "Phone","class" : "center" },
-                    { "sTitle": "DOJ","class" : "center" },
-                    { "sTitle": "Action","class" : "center" }
-                    ],
-                    "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                        $(nRow).children().each(function (index, td) {
-                            $(this).addClass('center');
-                        });
-                        $(".dataTables_filter").css("display","none");  
-                    }
-                });
+            success: function (employee) {
+                alert(JSON.stringify(employee));
+                $('#firstName').val(employee.firstName);
+                $('#lastName').val(employee.lastName);
+                $('#email').val(employee.email);
+                $('#phone').val(employee.phone);
+                $('#doj').val(employee.doj);
+                $('#userName').val(employee.userName);
+                $('#viewEmployee').modal('show');
             }
         });
-      
-}
+        
+    };
+    function populateEmployees(url){
+        $.ajax({
+                method: "GET",
+                url: url,
+                contentType: 'application/json',
+                success: function (result) {
+                    $('#employeeList').dataTable().fnDestroy();
+                    $('#employeeList').dataTable({
+                        "aaData": result["DATA"],
+                        "aoColumns": [
+                        { "sTitle": "Name","class" : "center" },
+                        { "sTitle": "Email","class" : "center" },
+                        { "sTitle": "Phone","class" : "center" },
+                        { "sTitle": "DOJ","class" : "center" },
+                        { "sTitle": "Action","class" : "center" }
+                        ],
+                        "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                            $(nRow).children().each(function (index, td) {
+                                $(this).addClass('center');
+                            });
+                            $(".dataTables_filter").css("display","none");  
+                        }
+                    });
+                }
+            });
+
+    }
 </script>
 
 <!-- external javascript -->
