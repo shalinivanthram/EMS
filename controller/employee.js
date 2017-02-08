@@ -92,6 +92,9 @@ var getEmployeeList = function(req, res){
     if(paramName && paramValue){
         options[paramName] = {'$regex': paramValue,$options:'i'};
     }
+    console.log("Username :"+JSON.stringify(req.user));
+    var username = req.user.username;
+    var isAdmin = req.user.isAdmin;
     Employee.find(options).exec(function (err, employees) {
         if(err){
                 console.log("err: " + err);
@@ -103,9 +106,17 @@ var getEmployeeList = function(req, res){
                   employee.push(emp.email);
                   employee.push(emp.phone);
                   employee.push(emp.doj.toString());
-                  var actions = '<a class="btn btn-success" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
+                  var actions = '<a class="btn btn-success" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>';
+                  if(isAdmin==='Y'){
+                      actions = '<a class="btn btn-success" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
                                 '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
-                                '<a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>'
+                                '<a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>';
+                  }
+                  if(emp.username===username){
+                      actions = '<a class="btn btn-success" href="#"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
+                                '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>';
+                  }
+                  
                   console.log("Employee :"+employee);
                   employee.push(actions);
                   employeesData.push(employee);
