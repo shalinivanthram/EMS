@@ -43,5 +43,8 @@ router.post("/updateEmp", function(req,res){
 router.get('/listEmployees', function(req, res, next) {
     res.render('listEmployees');
 });
+router.get('/deleteEmp', function(req, res, next) {
+	emp.delEmp(req, res);
+});
 
 module.exports = router;

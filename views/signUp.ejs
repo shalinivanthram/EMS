@@ -129,6 +129,14 @@
 	  		return true;
 	  	}
 	  }
+	  var result = '{'+<%= req.query.result %>+'}';
+	  alert('r: ' + result);
+	  if(result != null){
+	  	var emp = JSON.parse(result);
+	  	if(emp != null){
+	  		alert('found: ' + emp);
+	  	}
+	  }
     </script>
     
     <!-- End -->
@@ -139,8 +147,7 @@
     <![endif]-->
 
     <!-- The fav icon -->
-    <link rel="shortcut icon" href="img/favicon.ico">
-    
+    <link rel="shortcut icon" href="img/favicon.ico"> 
 </head>
 
 <body>
@@ -148,7 +155,9 @@
     <div>
     <div>
         <div align="center">
-            <h2>Sign up to EMS</h2>
+            <h2>
+            		Sign up to EMS
+            </h2>
         </div>
     </div>
     <div class="row">
@@ -159,7 +168,7 @@
                    	<tr>
 				        <td>First Name</td>
 				        <td class="center">
-				        	<input class="search-query form-control col-md-10" name="firstName" id="firstName" type="text">
+				        		<input class="search-query form-control col-md-10" name="firstName" id="firstName" type="text">
 				        </td>
 				    </tr>
 				    <tr>

@@ -16,10 +16,10 @@ var createEmp = function(req, res){
 	var userName = req.body.userName;
 	var password = req.body.password;
 	
-	if(isAdmin === null || isAdmin === ''){
-		isAdmin = 'N';
-	} else {
+	if(isAdmin){
 		isAdmin = 'Y';
+	} else {
+		isAdmin = 'N';
 	}
 	
 	var user = {
@@ -116,7 +116,7 @@ var getEmployeeList = function(req, res){
                   if(isAdmin==='Y'){
                       actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
                                 '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
-                                '<a class="btn btn-danger" href="#"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>';
+                                '<a class="btn btn-danger" href="/employees/deleteEmp?username='+emp.username+'"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>';
                   }
                   if(emp.username===username){
                       actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
@@ -173,6 +173,28 @@ var updateEmp = function(req, res){
 	
 };
 
+var delEmp = function(req, res){
+	var userName = req.query.username;
+	Employee.findOne({'username' : userName}).exec(function (err, employee) {
+		  if(err){
+			  console.log("err: " + err);
+		  } else if( employee === null){
+			  console.log("username does not exist");
+		  } else {
+			  console.log("going to del");
+			  employee.remove(function (err) {
+				  if (err) {
+						return err;
+				  }
+				  else {
+				  	res.redirect("/employees/listEmployees");
+				  }
+			  });
+		  }
+		});	
+};
+	
+exports.delEmp = delEmp;
 exports.updateEmp = updateEmp;
 exports.createEmp = createEmp;
 exports.getEmployee = getEmployee;
