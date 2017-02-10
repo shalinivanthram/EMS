@@ -48,7 +48,15 @@
     <![endif]-->
 
     <!-- The fav icon -->
-
+    <style>
+        .roundedPagination{
+            border: 2px solid;
+            background: rgba(198, 199, 189, 0.14);
+            border-radius: 15px;
+            border-color: #157ab5;
+            width: 10%;
+        }
+    </style>
 </head>
 
 <body>
@@ -366,6 +374,7 @@
                             });
                             $(".dataTables_filter").css("display","none"); 
                             $('#employeeList_next').css("margin-left","10px");
+                            $('#employeeList_paginate').addClass("col-md-12 center-block roundedPagination");
                         }
                     });
                 }
