@@ -114,12 +114,12 @@ var getEmployeeList = function(req, res){
                   employee.push(emp.doj.toString());
                   var actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>';
                   if(isAdmin==='Y'){
-                      actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
-                                '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
+                      actions = '<a class="btn btn-success" style="margin-right:5px;" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
+                                '<a class="btn btn-info" style="margin-right:5px;" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>'+
                                 '<a class="btn btn-danger" href="/employees/deleteEmp?username='+emp.username+'"><i class="glyphicon glyphicon-trash icon-white"></i>Delete</a>';
                   }
                   if(emp.username===username){
-                      actions = '<a class="btn btn-success" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
+                      actions = '<a class="btn btn-success" style="margin-right:5px;" onclick="getEmp(\''+emp.username+'\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>'+
                                 '<a class="btn btn-info" href="/employees/editEmp?username='+emp.username+'"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>';
                   }
                   
