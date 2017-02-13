@@ -57,13 +57,12 @@ var createEmp = function(req, res){
 
 };
 
-var getEmployee = function(req, res){
+var getEmployee = function(req, res, callback){
 	var username = req.query.username;
-        var responsetype = req.query.responsetype;
-	
 	Employee.findOne({'username' : username}).exec(function (err, employee) {
 	  if(err){
 		  console.log("err: " + err);
+                  //return res.send();
 	  } else if( employee === null){
 		  console.log("username does not exist");
 	  } else {
@@ -77,13 +76,9 @@ var getEmployee = function(req, res){
 				  	 "isAdmin":employee.isAdmin,
 				  	 "doj":employee.doj
 				  	};
-		  console.log(JSON.stringify(emp));
-                  if(responsetype==='json'){
-                      res.json(emp);
-                  }else{
-                      res.render("viewEmployee", {employee: emp});
-                  }
-		  
+		  //res.json(emp);
+                  console.log("Employee Record 1:"+JSON.stringify(emp));
+		  callback(null, emp);
 	  }
 	});
 }
@@ -128,11 +123,12 @@ var getEmployeeList = function(req, res){
                   employeesData.push(employee);
               });
               employeesJSON["DATA"] = employeesData;
-              res.json(employeesJSON);
+             res.json(employeesJSON);
+             // return employeesJSON;
         }
     });
 }
-var updateEmp = function(req, res){
+var updateEmp = function(req, res, callback){
 	var userName = req.body.userName;
 	var isAdmin = req.body.isAdmin;
 	console.log('from req: ' + isAdmin);
@@ -164,7 +160,8 @@ var updateEmp = function(req, res){
 				  }
 				  else {
 				  	console.log("Emp update Successful");
-				  	res.redirect("/employees/listEmployees");
+				  	//res.json({"status":"Success"});
+                                        callback(null,{"status":"Success"});
 				  }
 			  });
 		  }
@@ -173,7 +170,7 @@ var updateEmp = function(req, res){
 	
 };
 
-var delEmp = function(req, res){
+var delEmp = function(req, res, callback){
 	var userName = req.query.username;
 	Employee.findOne({'username' : userName}).exec(function (err, employee) {
 		  if(err){
@@ -187,7 +184,8 @@ var delEmp = function(req, res){
 						return err;
 				  }
 				  else {
-				  	res.redirect("/employees/listEmployees");
+                                      //res.json({"status":"Success"});
+				  	callback(null,{"status":"Success"});
 				  }
 			  });
 		  }

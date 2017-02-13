@@ -21,13 +21,20 @@ router.post("/empSignUp", function(req,res){
 
 //edit employee using username
 router.get('/editEmp', function(req, res){
+    var responsetype = req.query.responsetype;
 	if(req.query.username === null || req.query.username === ''){
 		console.log('no user name to retrieve');
 		//redirect to error page
 		res.render('/viewEmployee?error=error.editEmp.invalidUserName');
 	} else {
-		console.log("going to get emp details");
-		emp.getEmployee(req, res);
+            console.log("going to get emp details");
+            emp.getEmployee(req, res, function(error, result){
+                if(responsetype==='json'){
+                res.json(result);
+                }else{
+                    res.render("viewEmployee", {employee: result});
+                }
+            });
 	}
 });
 
@@ -38,13 +45,23 @@ router.get('/getEmployeeList', function(req, res, next) {
 });
 
 router.post("/updateEmp", function(req,res){
-	emp.updateEmp(req, res);
+	emp.updateEmp(req, res, function(error, result){
+            if(result.status === "Success"){
+                res.redirect("/employees/listEmployees");
+            }
+        });
+        
+        
 });
 router.get('/listEmployees', function(req, res, next) {
     res.render('listEmployees');
 });
 router.get('/deleteEmp', function(req, res, next) {
-	emp.delEmp(req, res);
+	emp.delEmp(req, res, function(error, result){
+            if(result.status === "Success"){
+                res.redirect("/employees/listEmployees");
+            }
+        });
 });
 
 module.exports = router;
