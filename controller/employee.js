@@ -57,14 +57,15 @@ var createEmp = function(req, res){
 
 };
 
-var getEmployee = function(req, res, callback){
-	var username = req.query.username;
+var getEmployee = function(username, callback){
+	console.log("Username:"+username);
 	Employee.findOne({'username' : username}).exec(function (err, employee) {
 	  if(err){
 		  console.log("err: " + err);
                   //return res.send();
 	  } else if( employee === null){
 		  console.log("username does not exist");
+                  callback(null, null);
 	  } else {
 		  //res.setHeader('Content-Type', 'application/json');
 		  var emp = {"firstName": employee.firstName,
@@ -83,19 +84,19 @@ var getEmployee = function(req, res, callback){
 	});
 }
 
-var getEmployeeList = function(req, res){
+var getEmployeeList = function(searchObj, callback){
     
     var employeesJSON = {};
     var employeesData = [];
-    var paramName = req.query.paramName;
-    var paramValue = req.query.paramValue;
+    var paramName = searchObj.paramName;
+    var paramValue = searchObj.paramValue;
     var options = {};
     if(paramName && paramValue){
         options[paramName] = {'$regex': paramValue,$options:'i'};
     }
-    console.log("Username :"+JSON.stringify(req.user));
-    var username = req.user.username;
-    var isAdmin = req.user.isAdmin;
+    console.log("Username :"+JSON.stringify(searchObj.username));
+    var username = searchObj.username;
+    var isAdmin = searchObj.isAdmin;
     Employee.find(options).exec(function (err, employees) {
         if(err){
                 console.log("err: " + err);
@@ -123,17 +124,16 @@ var getEmployeeList = function(req, res){
                   employeesData.push(employee);
               });
               employeesJSON["DATA"] = employeesData;
-             res.json(employeesJSON);
+             callback(null, employeesJSON);
              // return employeesJSON;
         }
     });
 }
-var updateEmp = function(req, res, callback){
-	var userName = req.body.userName;
-	var isAdmin = req.body.isAdmin;
-	console.log('from req: ' + isAdmin);
-	
-	if(isAdmin == null || isAdmin === '' || (isAdmin != null && isAdmin.toLowerCase() == 'undefined')){
+var updateEmp = function(emp, callback){
+	console.log('from req: ' + emp.isAdmin);
+	var userName= emp.userName;
+        var isAdmin = emp.isAdmin;
+	if(!isAdmin){
 		isAdmin = 'N';
 	} else {
 		isAdmin = 'Y';
@@ -146,13 +146,13 @@ var updateEmp = function(req, res, callback){
 			  console.log("username does not exist");
 		  } else {
 			  //update employee with new values
-			  employee.firstName = req.body.firstName;
-			  employee.lastName = req.body.lastName;
-			  employee.email = req.body.email;
-			  employee.phone = req.body.phone;
-			  employee.doj = req.body.doj;
+			  employee.firstName = emp.firstName;
+			  employee.lastName = emp.lastName;
+			  employee.email = emp.email;
+			  employee.phone = emp.phone;
+			  employee.doj = emp.doj;
 			  employee.isAdmin = isAdmin;
-			  employee.password = req.body.password;
+			  employee.password = emp.password;
 				
 			  employee.save(function (err) {
 				  if (err) {
@@ -170,8 +170,8 @@ var updateEmp = function(req, res, callback){
 	
 };
 
-var delEmp = function(req, res, callback){
-	var userName = req.query.username;
+var delEmp = function(userName, callback){
+	
 	Employee.findOne({'username' : userName}).exec(function (err, employee) {
 		  if(err){
 			  console.log("err: " + err);
@@ -181,7 +181,7 @@ var delEmp = function(req, res, callback){
 			  console.log("going to del");
 			  employee.remove(function (err) {
 				  if (err) {
-						return err;
+						callback(err,null);
 				  }
 				  else {
                                       //res.json({"status":"Success"});

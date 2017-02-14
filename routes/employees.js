@@ -22,42 +22,53 @@ router.post("/empSignUp", function(req,res){
 //edit employee using username
 router.get('/editEmp', function(req, res){
     var responsetype = req.query.responsetype;
-	if(req.query.username === null || req.query.username === ''){
-		console.log('no user name to retrieve');
-		//redirect to error page
-		res.render('/viewEmployee?error=error.editEmp.invalidUserName');
-	} else {
+    var username = req.query.username;
+	if(username){
             console.log("going to get emp details");
-            emp.getEmployee(req, res, function(error, result){
+            emp.getEmployee(username, function(error, result){
                 if(responsetype==='json'){
                 res.json(result);
                 }else{
                     res.render("viewEmployee", {employee: result});
                 }
             });
+		
+	} else {
+            console.log('no user name to retrieve');
+            //redirect to error page
+            res.render('/viewEmployee?error=error.editEmp.invalidUserName');
 	}
 });
 
 router.get('/getEmployeeList', function(req, res, next) {
-    
-    emp.getEmployeeList(req, res);
+    var paramName = req.query.paramName;
+    var paramValue = req.query.paramValue;
+    var username = req.user.username;
+    var isAdmin = req.user.isAdmin;
+    var searchObj = {"paramName" : paramName, "paramValue" : paramValue, "username" : username, "isAdmin" : isAdmin};
+    emp.getEmployeeList(searchObj, function(err, result){
+        console.log("final result: " + result);
+        res.json(result);
+    });
     
 });
 
 router.post("/updateEmp", function(req,res){
-	emp.updateEmp(req, res, function(error, result){
-            if(result.status === "Success"){
-                res.redirect("/employees/listEmployees");
-            }
-        });
-        
+    var employee =req.body;
+
+    emp.updateEmp(employee, function(error, result){
+        if(result.status === "Success"){
+            res.redirect("/employees/listEmployees");
+        }
+    });      
         
 });
 router.get('/listEmployees', function(req, res, next) {
     res.render('listEmployees');
 });
 router.get('/deleteEmp', function(req, res, next) {
-	emp.delEmp(req, res, function(error, result){
+    var userName = req.query.username;
+	emp.delEmp(userName, function(error, result){
             if(result.status === "Success"){
                 res.redirect("/employees/listEmployees");
             }
