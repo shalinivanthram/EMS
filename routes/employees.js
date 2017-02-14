@@ -16,7 +16,33 @@ router.get('/logout', function(req, res, next) {
 });
 
 router.post("/empSignUp", function(req,res){
-	emp.createEmp(req, res);
+    var isAdmin = req.body.isAdmin;
+    if(isAdmin){
+            isAdmin = 'Y';
+    } else {
+            isAdmin = 'N';
+    }
+    
+    var newEmp = {
+        "firstName" : req.body.firstName,
+        "lastName" : req.body.lastName,
+        "email" : req.body.email,
+        "phone" : req.body.phone,
+        "doj" : req.body.doj,
+        "isAdmin" : isAdmin,
+        "username" : req.body.userName,
+        "password" : req.body.password,
+    };
+    emp.createEmp(newEmp, function(error, result){
+        var status = result.status;
+        if(status === 'success'){
+            res.redirect('/');
+        } else if(status === 'userExists'){
+            res.redirect('/?error=error.user_exists');
+        }else {
+            res.redirect('/?error=error.signUp_error');
+        }
+    });
 });
 
 //edit employee using username

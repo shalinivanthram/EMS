@@ -57,7 +57,7 @@
       			buttonWidth:50,
       			buttonText: "Select date"
     		});
-           $("#empSingUp").button().click(function(){
+           $("#empSignUp").button().click(function(){
               if($("#firstName").val() === ''){
             	   alert('Please enter first name');
             	   return false;
@@ -90,7 +90,7 @@
                	   alert('Date of joining cannot be future date');
             	   return false;
                }
-               if($("#usertName").val() === ''){
+               if($("#userName").val() === ''){
             	   alert('Please enter user name');
             	   return false;
                }
@@ -122,21 +122,22 @@
 	  function validateDoj(doj){
 	  	var dateArr = doj.split("/");
 	  	var today = new Date();
-	  	var selectedDate = new Date(dateArr[2],dateArr[0],dateArr[1]);
+	  	var selectedDate = new Date(dateArr[2],dateArr[0]-1,dateArr[1]);
+                //alert(selectedDate);
 	  	if(selectedDate > today){
 	  		return false;
 	  	} else {
 	  		return true;
 	  	}
 	  }
-	  var result = '{'+<%= req.query.result %>+'}';
+	  /*var result = '{'+<%= req.query.result %>+'}';
 	  alert('r: ' + result);
 	  if(result != null){
 	  	var emp = JSON.parse(result);
 	  	if(emp != null){
 	  		alert('found: ' + emp);
 	  	}
-	  }
+	  }*/
     </script>
     
     <!-- End -->

@@ -6,54 +6,32 @@
 var mongo = require("../lib/mongo");
 var Employee = mongo.Employee;
 
-var createEmp = function(req, res){
-	var firstName = req.body.firstName;
-	var lastName = req.body.lastName;
-	var email = req.body.email;
-	var phone = req.body.phone;
-	var doj = req.body.doj;
-	var isAdmin = req.body.isAdmin;
-	var userName = req.body.userName;
-	var password = req.body.password;
+var createEmp = function(newEmp, callback){
 	
-	if(isAdmin){
-		isAdmin = 'Y';
-	} else {
-		isAdmin = 'N';
-	}
-	
-	var user = {
-			firstName: firstName,
-            lastName:lastName,
-            username:userName,
-            password:password,
-            email:email,
-            phone:phone,
-            isAdmin:isAdmin,
-            doj:doj
-	}
-	
-	var employee = new Employee();
-	
-	Employee.findOne({'username' : userName}).exec(function (err, employee) {
-	  if(err){
-		  console.log("err: " + err);
-	  } else if( employee != null){
-		  console.log("user already exists");
-	  } else {
-		  //create a new user
-		  employee = new Employee(user);
-		  employee.save(function (err) {
-			  if (err) {
-					return err;
-			  }
-			  else {
-			  	console.log("Emp saved");
-			  	//res.render();
-			  }
-			});
-	  }
-	});
+    var employee = new Employee();
+
+    Employee.findOne({'username' : newEmp.username}).exec(function (err, employee) {
+      if(err){
+              //console.log("err: " + err);
+              callback(null, {"status" : "failed"});
+              
+      } else if( employee != null){
+              //console.log("user already exists");
+              callback(null, {"status" : "userExists"});
+              
+      } else {
+            //create a new user
+            employee = new Employee(newEmp);
+            employee.save(function (err) {
+                if (err) {
+                    callback(null, {"status" : "failed"});
+                }
+                else {
+                        callback(null, {"status" : "success"});
+                }
+            });
+      }
+    });
 
 };
 

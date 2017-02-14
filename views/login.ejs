@@ -58,7 +58,7 @@
                }
                return true;
            });
-           var url = "/signUp";
+           /*var url = "/signUp";
            $( "#thedialog").html('<iframe style="border: 1px; color:black " src="' + url + '" width="100%" height="100%"></iframe>')
            		.dialog({
 	               autoOpen: false, 
@@ -66,10 +66,13 @@
 	               height: 650,
                    width: 700,
                	   title: "Sign Up"
-            });
+            });*/
            $("#signUp").button().click(function(){
+                $('#loginForm').attr('action', '/signUp');
+                $('#loginForm').attr('method', 'GET');;
+              /*var url = "/signUp";  
 	            $( "#thedialog" ).dialog( "open" );
-		        return false;
+		        return false;*/
            });
     	});
       </script>
@@ -108,7 +111,7 @@
                     <%=__(req.query.error) %>
                 </div>
             <% } %>
-            <form class="form-horizontal" action="/employees/login" method="post">
+            <form class="form-horizontal" action="/employees/login" method="post" id="loginForm">
                 <fieldset>
                     <div class="input-group input-group-lg">
                         <span class="input-group-addon"><i class="glyphicon glyphicon-user red"></i></span>

@@ -8,5 +8,7 @@
 	"login": "Login",
 	"signup": "Signup",
 	"sample": "sample",
-	"update":"Update"
+	"update":"Update",
+        "error.signUp_error":"Error creating new employee. Please try again",
+        "error.user_exists":"User already exists"
 }
