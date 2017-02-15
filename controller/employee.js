@@ -7,6 +7,7 @@
 
 var mongo = require("../lib/mongo");
 var Employee = mongo.Employee;
+var moment = require('moment');
 
 var createEmp = function (newEmp, callback) {
 
@@ -51,7 +52,8 @@ var getEmployee = function (username, callback) {
                 "email": employee.email,
                 "phone": employee.phone,
                 "isAdmin": employee.isAdmin,
-                "doj": employee.doj
+                //"doj": employee.doj
+                "doj": moment(employee.doj).format('MM/DD/YYYY')
             };
             //res.json(emp);
             console.log("Employee Record 1:" + JSON.stringify(emp));
@@ -85,7 +87,13 @@ var getEmployeeList = function (searchObj, callback) {
                 employee.push(emp.firstName + " " + emp.lastName);
                 employee.push(emp.email);
                 employee.push(emp.phone);
-                employee.push(emp.doj.toString());
+                //employee.push(emp.doj.toString());
+                if (emp.doj) {
+                    employee.push(moment(emp.doj).format('MM/DD/YYYY'));
+                } else {
+                    console.log("found empty sting for user name: " + emp.username);
+                    employee.push("");
+                }
                 if (isAdmin === 'Y') {
                     actions = '<a class="btn btn-success" style="margin-right:5px;" onclick="getEmp(\'' + emp.username + '\');"><i class="glyphicon glyphicon-zoom-in icon-white"></i>View</a>' +
                         '<a class="btn btn-info" style="margin-right:5px;" href="/employees/editEmp?username=' + emp.username + '"><i class="glyphicon glyphicon-edit icon-white"></i>Edit</a>' +

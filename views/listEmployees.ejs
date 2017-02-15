@@ -342,7 +342,8 @@
                 $('#lastName').val(employee.lastName);
                 $('#email').val(employee.email);
                 $('#phone').val(employee.phone);
-                $('#doj').val(employee.doj);
+                //$('#doj').val(employee.doj);
+                $('#doj').val(moment(employee.doj).format("MM/DD/YYYY"));
                 $('#userName').val(employee.userName);
                 if(employee.isAdmin==='Y'){
                     $('#isAdmin').attr('checked',true);

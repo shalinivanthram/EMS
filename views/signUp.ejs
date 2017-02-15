@@ -163,6 +163,12 @@
     </div>
     <div class="row">
         <div class="well col-md-5 center login-box">
+        	<% if(req.query.error && __(req.query.error)) {%>
+           		<div class="alert alert-danger alert-dismissable">
+        			<a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
+                    <%=__(req.query.error) %>
+           		</div>
+        	<% } %>
              <form class="form-horizontal" action="/employees/empSignUp" method="post">
                 <fieldset>
                    <table class="table">

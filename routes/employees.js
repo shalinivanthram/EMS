@@ -43,7 +43,7 @@ router.post("/empSignUp", function (req, res) {
         } else if (status === 'success') {
             res.redirect('/');
         } else if (status === 'userExists') {
-            res.redirect('/?error=error.user_exists');
+            res.redirect('/signUp?error=error.user_exists');
         } else {
             res.redirect('/?error=error.signUp_error');
         }
