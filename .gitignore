@@ -1,3 +1,5 @@
 node_modules
 .project
 nbproject
+testresults.txt
+out
